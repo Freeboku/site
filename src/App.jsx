@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useCallback, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import Layout from '@/components/Layout';
 import HomePage from '@/pages/HomePage';
@@ -67,6 +67,29 @@ function App() {
     }
   }, []);
 
+  const fetchWebtoonDetails = async (slug) => {
+    if (!slug) {
+      console.error("Webtoon slug is undefined");
+      return;
+    }
+  
+    try {
+      const { data: webtoonData, error } = await supabase
+        .from('webtoons')
+        .select('*, chapters(id, number, created_at, views)')
+        .eq('slug', slug)
+        .single();
+  
+      if (error) {
+        console.error('Error fetching webtoon details:', error.message);
+      }
+  
+      return webtoonData;
+    } catch (err) {
+      console.error('Failed to fetch webtoon details:', err);
+    }
+  };
+
   const navigateToChapterBySlugAndNumber = (slug, chapterNumber) => {
     navigate(`/webtoon/${slug}/chapter/${chapterNumber}`);
   };
@@ -116,5 +139,15 @@ function App() {
     </>
   );
 }
+
+const WebtoonDetailPage = () => {
+  const { slug } = useParams();
+
+  useEffect(() => {
+    fetchWebtoonDetails(slug);
+  }, [slug]);
+
+  return <div>Webtoon Details</div>;
+};
 
 export default App;
