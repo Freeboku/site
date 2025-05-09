@@ -106,10 +106,13 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Toaster />
-      <Link to={`/webtoon/${webtoon.slug}/chapter/${chapter.number}`}>
-        Lire Chapitre {chapter.number}
-      </Link>
-      
+      {webtoon && chapter ? (
+        <Link to={`/webtoon/${webtoon.slug}/chapter/${chapter.number}`}>
+          Lire Chapitre {chapter.number}
+        </Link>
+      ) : (
+        <p>Chargement des données...</p>
+      )}
     </>
   );
 }
