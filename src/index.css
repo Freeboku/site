@@ -1,0 +1,149 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%; /* Dark Blue/Gray - Kept as is for black background */
+    --foreground: 0 0% 98%; /* White */
+    
+    --card: 240 8% 10%; /* Slightly lighter dark */
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Gold color scheme */
+    --primary: 45 100% 51%; /* Gold */
+    --primary-foreground: 240 10% 3.9%; /* Dark for text on gold */
+    
+    --secondary: 45 70% 30%; /* Darker Gold/Brown */
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 45 50% 20%; /* Muted Gold/Brown */
+    --muted-foreground: 0 0% 63%; /* Light Gray - Original muted foreground color */
+    
+    --accent: 45 70% 40%; /* Accent Gold */
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 72% 51%; /* Red - Kept as is */
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Adjusted for gray search bar */
+    --border: 240 5% 25%; /* Grayish border */
+    --input: 240 4% 15%; /* Gray input background */
+    --ring: 45 100% 51%; /* Ring color (gold for focus) */
+    
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply font-sans; /* Add a default font family */
+  }
+}
+
+/* Custom Styles */
+.manga-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.manga-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px hsla(var(--primary), 0.2), 0 6px 6px hsla(var(--primary), 0.15); /* Gold shadow */
+}
+
+/* Custom Scrollbar for specific containers */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px; /* For horizontal scrollbars */
+  width: 8px; /* For vertical scrollbars */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--secondary) / 0.5);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.6);
+  border-radius: 10px;
+  border: 2px solid hsl(var(--secondary) / 0.5); /* Creates padding around thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: hsl(var(--primary) / 0.6) hsl(var(--secondary) / 0.5); /* For Firefox */
+}
+
+
+/* Scrollbar hide utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+/* Ensure images in reader don't exceed viewport width */
+.reader-container img {
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Shadcn Table adjustments if needed */
+/* Example: Add hover effect to table rows */
+/* tbody tr:hover {
+  @apply bg-muted/50;
+} */
+
+/* File Uploader specific styles (if needed beyond base shadcn) */
+.upload-drop-zone {
+  border: 2px dashed hsl(var(--border));
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  @apply bg-muted/20 hover:bg-muted/40;
+}
+
+.upload-drop-zone.active {
+  border-color: hsl(var(--primary));
+  background-color: hsla(var(--primary), 0.1);
+}
+
+.file-preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  transition: transform 0.2s ease;
+  border: 1px solid hsl(var(--border));
+}
+
+.file-preview:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.file-preview .remove-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10; /* Ensure it's above the image */
+}
+
+.file-preview:hover .remove-button {
+  opacity: 1;
+}
