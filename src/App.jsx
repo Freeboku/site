@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import Layout from '@/components/Layout';
@@ -23,6 +23,9 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import AllNotificationsPage from '@/pages/AllNotificationsPage';
 
 function App() {
+  const [webtoon, setWebtoon] = useState(null);
+  const [chapter, setChapter] = useState(null);
+
   const fetchChapterDetails = useCallback(async (slug, chapterNumber) => {
     setLoading(true);
     setError(null);
@@ -106,6 +109,7 @@ function App() {
       <Link to={`/webtoon/${webtoon.slug}/chapter/${chapter.number}`}>
         Lire Chapitre {chapter.number}
       </Link>
+      
     </>
   );
 }
