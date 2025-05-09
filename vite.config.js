@@ -171,8 +171,11 @@ const addTransformIndexHtml = {
 console.warn = () => {};
 
 export default defineConfig({
-		base: './',  
+	base: './',  
 	plugins: [react(), addTransformIndexHtml],
+	build: {
+		outDir: 'dist',
+	},
 	server: {
 		cors: true,
 		headers: {
