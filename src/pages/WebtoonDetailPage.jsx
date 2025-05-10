@@ -247,7 +247,7 @@ if (webtoonData) {
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
                  {sortedChapters.length > 0 && firstChapterToRead ? (
                     <Button asChild className="w-full sm:w-auto">
-                       <Link to={`/webtoon/${webtoon.id}/chapter/${firstChapterToRead.id}`}>
+                       <Link to={`/webtoon/${webtoon.slug}/chapter/${firstChapterToRead.id}`}>
                         <BookOpen className="mr-2 h-4 w-4" /> Lire Ch. {firstChapterToRead.number}
                       </Link>
                     </Button>
