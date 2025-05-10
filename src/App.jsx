@@ -140,14 +140,4 @@ function App() {
   );
 }
 
-const WebtoonDetailPage = () => {
-  const { slug } = useParams();
-
-  useEffect(() => {
-    fetchWebtoonDetails(slug);
-  }, [slug]);
-
-  return <div>Webtoon Details</div>;
-};
-
 export default App;
