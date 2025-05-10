@@ -64,7 +64,7 @@ const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPub
 
 
 const WebtoonDetailPage = () => {
-  const { webtoonId } = useParams();
+  const { slug } = useParams();
   const [webtoon, setWebtoon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -83,10 +83,14 @@ const WebtoonDetailPage = () => {
     setError(null);
     try {
       await incrementWebtoonView(webtoonId);
-      const data = await getWebtoonById(webtoonId);
-      if (data) {
-        setWebtoon(data);
-        if (user && data.id) {
+      const { data: webtoon } = await supabase
+  .from('webtoons')
+  .select('*')
+  .eq('slug', slug)
+  .single();
+      if (webtoon) {
+        setWebtoon(webtoon);
+        if (user && webtoon.id) {
           const readData = await getReadChapters(user.id, data.id);
           setReadChapters(readData);
         }

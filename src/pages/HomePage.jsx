@@ -142,7 +142,7 @@ const HomePage = () => {
               {topWebtoons.map((webtoon) => (
                 <motion.div key={webtoon.id} variants={itemVariants} className="flex-shrink-0 w-48 sm:w-56 md:w-64 lg:w-72">
                   <Card className="bg-card/70 backdrop-blur-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col rounded-lg overflow-hidden group border-border/30">
-                    <Link to={`/webtoon/${webtoon.id}`} className="block" draggable="false">
+                    <Link to={`/webtoon/${webtoon.slug}`} className="block" draggable="false">
                       <CardHeader className="p-0">
                         <div className="aspect-[3/4] bg-muted overflow-hidden">
                           <img  
@@ -236,7 +236,7 @@ const HomePage = () => {
             <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-6">
               {latestWebtoonsGrid.map((webtoon) => (
                 <motion.div key={webtoon.id} variants={itemVariants}>
-                  <Link to={`/webtoon/${webtoon.id}`}>
+                  <Link to={`/webtoon/${webtoon.slug}`}>
                     <Card className="overflow-hidden h-full group manga-card bg-card/70 backdrop-blur-sm border-border/30 hover:shadow-lg transition-all duration-300 rounded-lg">
                       <div className="aspect-[3/4] overflow-hidden bg-muted">
                         <img  
