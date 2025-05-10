@@ -75,7 +75,6 @@ const WebtoonDetailPage = () => {
   const [sortOrder, setSortOrder] = useState('asc'); 
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
-  const { slug } = useParams();
 
   const defaultCoverImage = useMemo(() => 'https://images.unsplash.com/photo-1703596066601-6dca5e7639ba', []);
 
@@ -84,11 +83,7 @@ const WebtoonDetailPage = () => {
     setError(null);
     try {
       await incrementWebtoonView(webtoonId);
-      const { data: webtoon } = await supabase
-        .from('webtoons')
-        .select('*')
-        .eq('slug', slug)
-        .single();
+      const data = await getWebtoonById(webtoonId);
       if (data) {
         setWebtoon(data);
         if (user && data.id) {
