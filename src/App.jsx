@@ -31,7 +31,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="webtoons" element={<AllWebtoonsPage />} />
           <Route path="webtoon/:slug" element={<WebtoonDetailPage />} />
-          <Route path="webtoon/:webtoonId/chapter/:chapterId" element={<ReaderPage />} /> 
+          <Route path="webtoon/:slug/chapter/:chapterId" element={<ReaderPage />} /> 
           <Route path="auth" element={<AuthPage />} />
           <Route element={<ProtectedRoute />}>
              <Route path="profile" element={<ProfilePage />} />
