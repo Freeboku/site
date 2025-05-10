@@ -24,7 +24,7 @@ import { supabase } from '@/lib/supabaseClient';
 
 
 
-const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPublicViews }) => {
+const ChapterListItem = React.memo(({ chapter, webtoonSlug, isRead, isNew, showPublicViews }) => {
   const isRestricted = chapter.required_roles && chapter.required_roles.length > 0;
   return (
     <li>
@@ -33,7 +33,7 @@ const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPub
         asChild 
         className={`w-full justify-start text-left h-auto py-2 px-3 hover:bg-muted/50 ${isRead ? 'opacity-60' : ''}`}
       >
-        <Link to={`/webtoon/${webtoon.slug}/chapter/${chapter.id}`} className="flex items-center w-full">
+        <Link to={`/webtoon/${webtoonSlug}/chapter/${chapter.id}`} className="flex items-center w-full">
           {isRead && <Eye className="mr-2 h-4 w-4 text-muted-foreground flex-shrink-0" />}
           <span className="truncate">Chapitre {chapter.number}</span>
           {isNew && !isRead && <Sparkles className="ml-2 h-4 w-4 text-yellow-400 flex-shrink-0" />}
@@ -247,7 +247,7 @@ if (webtoonData) {
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
                  {sortedChapters.length > 0 && firstChapterToRead ? (
                     <Button asChild className="w-full sm:w-auto">
-                       <Link to={`/webtoon/${webtoon.slug}/chapter/${firstChapterToRead.id}`}>
+                       <Link to={`/webtoon/${webtoonSlug}/chapter/${firstChapterToRead.id}`}>
                         <BookOpen className="mr-2 h-4 w-4" /> Lire Ch. {firstChapterToRead.number}
                       </Link>
                     </Button>
@@ -291,6 +291,7 @@ if (webtoonData) {
                 <ChapterListItem 
                   key={chapter.id}
                   chapter={chapter}
+                  webtoonSlug={webtoon.slug}
                   webtoonId={webtoon.id}
                   isRead={readChapters.includes(chapter.id)}
                   isNew={isChapterNew(chapter.created_at)}
