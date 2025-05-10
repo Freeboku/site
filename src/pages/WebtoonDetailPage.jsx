@@ -88,7 +88,7 @@ const WebtoonDetailPage = () => {
 
 const { data: webtoonData } = await supabase
   .from('webtoons')
-  .select('*')
+  .select('*, chapters(*)') 
   .eq('slug', slug)
   .single();
 
