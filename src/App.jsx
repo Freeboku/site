@@ -21,6 +21,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import ProtectedRoute from '@/components/ProtectedRoute'; 
 import AllNotificationsPage from '@/pages/AllNotificationsPage';
 import { supabase } from '@/lib/supabaseClient';
+import { useParams } from 'react-router-dom';
 
 const incrementWebtoonView = async (webtoonId) => {
   if (!webtoonId) {
@@ -76,6 +77,92 @@ const WebtoonDetailPage = () => {
   }, [slug]);
 
   return <div>Webtoon Details</div>;
+};
+
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+
+const ReaderPage = () => {
+  const { slug, chapterNumber } = useParams();
+  const [chapter, setChapter] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchChapterDetails = async () => {
+      try {
+        const { data: webtoon } = await supabase
+          .from('webtoons')
+          .select('id, title')
+          .eq('slug', slug)
+          .single();
+
+        if (!webtoon) {
+          setError("Webtoon non trouvé.");
+          return;
+        }
+
+        const { data: chapter } = await supabase
+          .from('chapters')
+          .select('*')
+          .eq('webtoon_id', webtoon.id)
+          .eq('number', chapterNumber)
+          .single();
+
+        if (!chapter) {
+          setError("Chapitre non trouvé.");
+          return;
+        }
+
+        setChapter(chapter);
+      } catch (err) {
+        console.error("Erreur :", err);
+        setError("Impossible de charger le chapitre.");
+      }
+    };
+
+    fetchChapterDetails();
+  }, [slug, chapterNumber]);
+
+  if (error) return <div>{error}</div>;
+  if (!chapter) return <div>Chargement...</div>;
+
+  return <div>Lecture du chapitre {chapter.number}</div>;
+};
+
+export default ReaderPage;
+
+const fetchChapterDetails = async (slug, chapterNumber) => {
+  try {
+    // Récupérer le webtoon par son slug
+    const { data: webtoon } = await supabase
+      .from('webtoons')
+      .select('id, title')
+      .eq('slug', slug)
+      .single();
+
+    if (!webtoon) {
+      console.error("Webtoon non trouvé.");
+      return;
+    }
+
+    // Récupérer le chapitre par le numéro et l'ID du webtoon
+    const { data: chapter } = await supabase
+      .from('chapters')
+      .select('*')
+      .eq('webtoon_id', webtoon.id)
+      .eq('number', chapterNumber)
+      .single();
+
+    if (!chapter) {
+      console.error("Chapitre non trouvé.");
+      return;
+    }
+
+    console.log("Webtoon et chapitre récupérés :", webtoon, chapter);
+  } catch (err) {
+    console.error("Erreur lors de la récupération des détails :", err);
+  }
 };
 
 function App() {
