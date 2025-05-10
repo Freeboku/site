@@ -20,6 +20,8 @@ import NotFoundPage from './NotFoundPage';
 import CommentSection from '@/components/comments/CommentSection';
 import WebtoonCard from '@/components/WebtoonCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { supabase } from '@/lib/supabaseClient';
+
 
 
 const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPublicViews }) => {
