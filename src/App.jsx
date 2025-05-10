@@ -21,7 +21,6 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import ProtectedRoute from '@/components/ProtectedRoute'; 
 import AllNotificationsPage from '@/pages/AllNotificationsPage';
 import { supabase } from '@/lib/supabaseClient';
-import { useParams, useEffect, useState } from 'react-router-dom';
 
 const incrementWebtoonView = async (webtoonId) => {
   if (!webtoonId) {
