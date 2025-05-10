@@ -291,7 +291,7 @@ if (webtoonData) {
                 <ChapterListItem 
                   key={chapter.id}
                   chapter={chapter}
-                  webtoonId={webtoon.id}
+                  webtoonId={webtoon.slug}
                   isRead={readChapters.includes(chapter.id)}
                   isNew={isChapterNew(chapter.created_at)}
                   showPublicViews={webtoon.showPublicViews}
