@@ -27,6 +27,7 @@ const HomePage = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const { user, userRole } = useAuth();
+  const { slug } = useParams();
 
 
   useEffect(() => {
