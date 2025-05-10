@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -22,7 +21,7 @@ const WebtoonCard = ({ webtoon, isFavorite = false }) => {
       whileHover="hover"
       className="relative group"
     >
-      <Link to={`/webtoon/${webtoon.id}`}>
+      <Link to={`/webtoon/${webtoon.slug}`}>
         <Card className="overflow-hidden h-full border-0 shadow-lg bg-gradient-to-br from-secondary/50 to-background">
           <div className="relative aspect-[3/4] overflow-hidden">
             <img 

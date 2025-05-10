@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -116,14 +115,24 @@ const AdminWebtoonForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title) {
+        if (!title) {
       toast({ title: "Champ requis", description: "Le titre est obligatoire.", variant: "destructive" });
       return;
     }
     setLoading(true);
     setFormError(null);
+        if (!title) {
+      toast({ title: "Champ requis", description: "Le titre est obligatoire.", variant: "destructive" });
+      return;
+    }
+    setLoading(true);
+    setFormError(null);
+    const slug = title
+      .toLowerCase()
+      .replace(/ /g, '-')
+      .replace(/[^\w-]+/g, ''); // Remplace les espaces par des tirets et supprime les caractères spéciaux
 
-    const webtoonData = {
+        const webtoonData = {
       title, description, tags,
       coverImageFile, existingCoverPath,
       bannerImageFile, existingBannerPath,
@@ -134,18 +143,14 @@ const AdminWebtoonForm = () => {
     try {
       if (isEditing) {
         await updateWebtoon(webtoonId, webtoonData);
-        toast({ title: "Succès", description: "Webtoon mis à jour." });
+         toast({ title: "Succès", description: "Webtoon mis à jour." });
       } else {
-        await addWebtoon({ ...webtoonData, id: crypto.randomUUID() }); 
+        await addWebtoon({ ...webtoonData, id: crypto.randomUUID() });
         toast({ title: "Succès", description: "Webtoon ajouté." });
       }
       navigate('/admin/webtoons');
     } catch (error) {
-       console.error("Failed to save webtoon:", error);
-       setFormError(`Échec: ${error.message}`);
-       toast({ title: "Erreur", description: `Échec: ${error.message}`, variant: "destructive" });
-    } finally {
-       setLoading(false);
+      console.error('Failed to save webtoon:', error);
     }
   };
 
