@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-r
 import { Toaster } from '@/components/ui/toaster';
 import Layout from '@/components/Layout';
 import HomePage from '@/pages/HomePage';
-import ReaderPage from '@/pages/ReaderPage'; 
 import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
 import AllWebtoonsPage from '@/pages/AllWebtoonsPage';
@@ -77,9 +76,6 @@ const WebtoonDetailPage = () => {
 
   return <div>Webtoon Details</div>;
 };
-
-import { useParams, useEffect, useState } from 'react-router-dom';
-import { supabase } from '@/lib/supabaseClient';
 
 const ReaderPage = () => {
   const { slug, chapterNumber } = useParams();
