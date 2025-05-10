@@ -79,7 +79,7 @@ const WebtoonDetailPage = () => {
   return <div>Webtoon Details</div>;
 };
 
-import { useParams, useEffect, useState } from 'react';
+import { useParams, useEffect, useState } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
 
 const ReaderPage = () => {
