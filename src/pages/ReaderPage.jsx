@@ -20,7 +20,7 @@ const NAV_BAR_HEIGHT = 64;
 const KOFI_URL = "https://ko-fi.com/VOTRE_PAGE_KOFI";
 
 const ReaderPage = () => {
-  const { webtoonId, chapterId } = useParams();
+  const { slug, chapterId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { user, userRole } = useAuth(); 
@@ -44,6 +44,19 @@ const ReaderPage = () => {
   const preloadedImagesRef = useRef(new Set());
   const readerContentRef = useRef(null);
   const pageRefs = useRef([]);
+
+  const resolveSlugToId = async (slug) => {
+  const { data, error } = await supabase
+    .from('webtoons')
+    .select('id, title, show_public_views')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !data) throw new Error("Webtoon introuvable via le slug.");
+
+  return data;
+};
+
 
   const fetchChapterDetails = useCallback(async (currentChapterId, currentWebtoonId, currentUserId, currentUserRoleName) => {
     setLoading(true);
@@ -117,9 +130,27 @@ const ReaderPage = () => {
     }
   }, [toast]);
 
-  useEffect(() => {
-    fetchChapterDetails(chapterId, webtoonId, user?.id, userRole);
-  }, [chapterId, webtoonId, user?.id, userRole, fetchChapterDetails, location.key]);
+useEffect(() => {
+  const loadData = async () => {
+    if (!slug || !chapterId || slug === "undefined" || chapterId === "undefined") {
+      setError("Paramètres invalides.");
+      return;
+    }
+
+    try {
+      const webtoon = await resolveSlugToId(slug);
+      await fetchChapterDetails(chapterId, webtoon.id, user?.id, userRole);
+
+      // Facultatif : tu pourrais stocker `webtoon` dans `webtoonInfo` ici si tu veux l'utiliser ailleurs
+    } catch (err) {
+      console.error(err);
+      setError("Webtoon introuvable via le slug.");
+    }
+  };
+
+  loadData();
+}, [slug, chapterId, user?.id, userRole, fetchChapterDetails, location.key]);
+
 
   useEffect(() => { 
     localStorage.setItem('readingMode', readingMode); 
@@ -162,7 +193,7 @@ const ReaderPage = () => {
 
   const handleInteraction = () => { if (!showControls) setShowControls(true); resetControlsTimeout(); };
   const toggleComments = () => { setShowComments(!showComments); if (!showControls) setShowControls(true); };
-  const navigateToChapterById = (targetChapterId) => { if (targetChapterId) navigate(`/webtoon/${webtoonId}/chapter/${targetChapterId}`); };
+  const navigateToChapterById = (targetChapterId) => { if (targetChapterId) navigate(`/webtoon/${slug}/chapter/${targetChapterId}`); };
   
   const handlePageNavigation = (direction) => {
     const numPages = chapterData.currentChapter?.pages?.length || 0;
@@ -258,7 +289,7 @@ const ReaderPage = () => {
                         <Coffee className="mr-2 h-5 w-5" /> Soutenir sur Ko-fi
                     </Button>
                     <Button 
-                        onClick={() => navigate(`/webtoon/${webtoonId}`)} 
+                        onClick={() => navigate(`/webtoon/${slug}`)} 
                         variant="outline"
                         size="lg"
                         className="w-full border-neutral-600 hover:bg-neutral-700/50 text-neutral-300 hover:text-white"
