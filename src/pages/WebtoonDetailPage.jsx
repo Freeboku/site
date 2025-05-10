@@ -33,7 +33,7 @@ const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPub
         asChild 
         className={`w-full justify-start text-left h-auto py-2 px-3 hover:bg-muted/50 ${isRead ? 'opacity-60' : ''}`}
       >
-        <Link to={`/webtoon/${webtoon.id}/chapter/${chapter.id}`} className="flex items-center w-full">
+        <Link to={`/webtoon/${webtoonId}/chapter/${chapter.id}`} className="flex items-center w-full">
           {isRead && <Eye className="mr-2 h-4 w-4 text-muted-foreground flex-shrink-0" />}
           <span className="truncate">Chapitre {chapter.number}</span>
           {isNew && !isRead && <Sparkles className="ml-2 h-4 w-4 text-yellow-400 flex-shrink-0" />}
