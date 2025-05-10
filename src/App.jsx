@@ -30,7 +30,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="webtoons" element={<AllWebtoonsPage />} />
-          <Route path="webtoon/:webtoonId" element={<WebtoonDetailPage />} />
+          <Route path="webtoon/:slug" element={<WebtoonDetailPage />} />
           <Route path="webtoon/:webtoonId/chapter/:chapterId" element={<ReaderPage />} /> 
           <Route path="auth" element={<AuthPage />} />
           <Route element={<ProtectedRoute />}>

@@ -34,25 +34,25 @@ export const getWebtoons = async (searchTerm = '', selectedTags = [], filterBann
   return (data || []).map(mapWebtoonData);
 };
 
-export const getWebtoonById = async (id) => {
-   const { data: webtoonData, error: webtoonError } = await supabase
+export const getWebtoonBySlug = async (slug) => {
+  const { data, error } = await supabase
     .from('webtoons')
     .select(`*, chapters (id, number, created_at, views)`)
-    .eq('id', id)
+    .eq('slug', slug)
     .single();
 
-  if (webtoonError) {
-    console.error('Error fetching webtoon by ID:', webtoonError.message);
-    if (webtoonError.code === 'PGRST116') return null; 
-    throw webtoonError;
+  if (error) {
+    console.error('Error fetching webtoon by slug:', error.message);
+    if (error.code === 'PGRST116') return null;
+    throw error;
   }
-  if (!webtoonData) return null;
-  
+
   return {
-    ...mapWebtoonData(webtoonData),
-    chapters: (webtoonData.chapters || []).sort((a, b) => a.number - b.number).map(ch => ({ ...ch, views: ch.views || 0 })),
+    ...mapWebtoonData(data),
+    chapters: (data.chapters || []).sort((a, b) => a.number - b.number),
   };
 };
+
 
 export const addWebtoon = async (webtoonData) => {
   let coverPath = null;

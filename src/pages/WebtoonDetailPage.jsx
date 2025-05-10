@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, BookOpen, Heart, Loader2, Eye, Sparkles, ThumbsUp, ArrowUpNarrowWide, ArrowDownNarrowWide, Lock } from 'lucide-react';
 import { 
-  getWebtoonById, 
+  getWebtoonBySlug, 
   isFavorite, 
   addFavorite, 
   removeFavorite, 
@@ -82,7 +82,9 @@ const WebtoonDetailPage = () => {
     setLoading(true);
     setError(null);
     try {
-      await incrementWebtoonView(webtoonId);
+ if (webtoon?.id) {
+   await incrementWebtoonView(webtoon.id);
+ }
       const { data: webtoon } = await supabase
   .from('webtoons')
   .select('*')
@@ -91,10 +93,10 @@ const WebtoonDetailPage = () => {
       if (webtoon) {
         setWebtoon(webtoon);
         if (user && webtoon.id) {
-          const readData = await getReadChapters(user.id, data.id);
+          const readData = await getReadChapters(user.id, webtoon.id);
           setReadChapters(readData);
         }
-        const similarData = await getSimilarWebtoons(webtoonId);
+        const similarData = await getSimilarWebtoons(webtoon.id);
         setSimilarWebtoons(similarData);
       } else {
         setError("Webtoon non trouvé.");
@@ -317,7 +319,7 @@ const WebtoonDetailPage = () => {
         </Card>
       )}
       
-      <CommentSection webtoonId={webtoonId} />
+      <CommentSection webtoonId={webtoon?.id} />
     </motion.div>
   );
 };
