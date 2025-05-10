@@ -38,7 +38,7 @@ const ChapterViewer = ({ chapter, isOpen, onClose }) => {
         <div className="flex-1 overflow-auto p-4 bg-black/50 flex justify-center items-center">
             <AnimatePresence mode="wait">
               <motion.img
-                key={chapter.number || imageName} // Use chapter ID or image name as key
+                key={chapter.id || imageName} // Use chapter ID or image name as key
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

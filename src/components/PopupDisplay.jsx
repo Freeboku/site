@@ -88,7 +88,7 @@ const PopupDisplay = () => {
                     src={popup.imageUrl}
                     alt={popup.title || "Popup Image"}
                     className="w-full h-full object-cover"
-                   />
+                   src="https://images.unsplash.com/photo-1649766508871-9dabf2127f5b" />
                 </div>
               )}
               <div className="p-6 space-y-4">

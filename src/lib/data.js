@@ -1,3 +1,4 @@
+
 import { supabase } from './supabaseClient';
 
 const WEBTOON_IMAGES_BUCKET = 'webtoon-images';
@@ -223,15 +224,6 @@ export const getChapterWithPages = async (chapterId) => {
     pages: pagesWithUrls
   };
 }
-
-export const getChapterWithPagesBySlug = async (slug, chapterNumber, currentUserId, currentUserRole) => {
-  const { data: chapterData } = await supabase
-    .from('chapters')
-    .select('*')
-    .eq('slug', slug)
-    .eq('number', chapterNumber)
-    .single();
-};
 
 export const addChapter = async (webtoonId, chapterData) => {
   // chapterData should include { number, pages: [ { file: File, page_number: int } ] }

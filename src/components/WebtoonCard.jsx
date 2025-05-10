@@ -22,7 +22,7 @@ const WebtoonCard = ({ webtoon, isFavorite = false }) => {
       whileHover="hover"
       className="relative group"
     >
-      <Link to={`/webtoon/${webtoon.slug}`}>
+      <Link to={`/webtoon/${webtoon.id}`}>
         <Card className="overflow-hidden h-full border-0 shadow-lg bg-gradient-to-br from-secondary/50 to-background">
           <div className="relative aspect-[3/4] overflow-hidden">
             <img 

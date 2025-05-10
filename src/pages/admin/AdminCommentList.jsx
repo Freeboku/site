@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, Trash2, ExternalLink } from 'lucide-react';
@@ -95,8 +96,10 @@ const AdminCommentList = () => {
                     <TableCell>{comment.profiles?.username || 'N/A'}</TableCell>
                     <TableCell className="text-xs">
                        {comment.webtoons ? (
-                          <Link to={`/webtoon/${comment.webtoons.slug}`} target="_blank" rel="noopener noreferrer">
+                          <Link to={`/webtoon/${comment.webtoon_id}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary inline-flex items-center">
                              {comment.webtoons.title}
+                             {comment.chapters && ` (Ch. ${comment.chapters.number})`}
+                             <ExternalLink className="h-3 w-3 ml-1" />
                           </Link>
                        ) : (
                           'Webtoon supprimé'

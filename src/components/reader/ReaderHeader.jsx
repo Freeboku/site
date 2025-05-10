@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -36,7 +37,7 @@ const ReaderHeader = ({
       <div className="container mx-auto flex justify-between items-center h-full">
         <div className="flex items-center space-x-1 md:space-x-2 min-w-0">
           <Button variant="ghost" size="icon" asChild className="w-8 h-8 md:w-10 md:h-10 text-white hover:bg-white/10 hover:text-white">
-            <Link to={`/webtoon/${slug}`} title="Retour au webtoon">
+            <Link to={`/webtoon/${webtoonId}`} title="Retour au webtoon">
               <BookOpen className="h-4 w-4 md:h-5 md:w-5" />
             </Link>
           </Button>
@@ -62,9 +63,7 @@ const ReaderHeader = ({
             </SelectTrigger>
             <SelectContent className="bg-neutral-800 border-neutral-700 text-white max-h-60">
               {allChapters.length > 0 ? allChapters.map(ch => (
-                <SelectItem key={ch.number} value={ch.number}>
-                  Chapitre {ch.number}
-                </SelectItem>
+                <SelectItem key={ch.id} value={ch.id} className="text-xs md:text-sm hover:bg-neutral-700 focus:bg-neutral-600"> Chapitre {ch.number} </SelectItem>
               )) : (
                 <SelectItem value={currentChapterId} disabled className="text-xs md:text-sm">Chapitre {chapterNumber}</SelectItem>
               )}

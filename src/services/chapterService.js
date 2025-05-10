@@ -1,3 +1,4 @@
+
 import { supabase } from '@/lib/supabaseClient';
 import { getPublicUrl, uploadChapterPage, deleteChapterFolder, uploadFile, deleteFile, listFiles } from './storageService';
 import { getUserAccessLevelForChapter } from './permissionService';
@@ -400,13 +401,12 @@ export const getLatestChapters = async (limit = 4, currentUserId, currentUserRol
   }));
 };
 
-export const getPreviousAndNextChapter = async (slug, currentChapterNumber, currentUserId, currentUserRole) => {
+export const getPreviousAndNextChapter = async (webtoonId, currentChapterNumber, currentUserId, currentUserRole) => {
   const fetchChapterCandidates = async (comparisonOp, orderAsc) => {
     const { data, error } = await supabase
       .from('chapters')
       .select('id, number, required_roles')
-      .eq('slug', slug)
-      .eq('number', currentChapterNumber)
+      .eq('webtoon_id', webtoonId)
       [comparisonOp]('number', currentChapterNumber)
       .order('number', { ascending: orderAsc })
       .limit(10); 
@@ -465,12 +465,4 @@ export const getRandomChapterLink = async (currentUserId, currentUserRole) => {
 export const incrementChapterView = async (chapterId) => {
   const { error } = await supabase.rpc('increment_chapter_view', { chapter_id_param: chapterId });
   if (error) console.error('Error incrementing chapter view:', error.message);
-};
-
-export const getWebtoonBySlug = async (slug) => {
-  const { data: webtoonData } = await supabase
-    .from('webtoons')
-    .select('*')
-    .eq('slug', slug)
-    .single();
 };

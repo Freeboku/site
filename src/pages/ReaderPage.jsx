@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, ShieldAlert, Lock, Coffee } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
@@ -16,14 +17,15 @@ import ReaderFooter from '@/components/reader/ReaderFooter';
 import ReaderCommentsPanel from '@/components/reader/ReaderCommentsPanel';
 
 const NAV_BAR_HEIGHT = 64; 
-const KOFI_URL = "https://ko-fi.com/starboundcomics";
+const KOFI_URL = "https://ko-fi.com/VOTRE_PAGE_KOFI";
 
 const ReaderPage = () => {
+  const { webtoonId, chapterId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { user, userRole } = useAuth(); 
   const { toast } = useToast();
-  const { slug, chapterNumber } = useParams();
+
   const [chapterData, setChapterData] = useState({
     webtoonInfo: null,
     currentChapter: null,
@@ -116,8 +118,8 @@ const ReaderPage = () => {
   }, [toast]);
 
   useEffect(() => {
-    fetchChapterDetails(slug, chapterNumber, user?.id, userRole);
-  }, [slug, chapterNumber, user?.id, userRole, fetchChapterDetails, location.key]);
+    fetchChapterDetails(chapterId, webtoonId, user?.id, userRole);
+  }, [chapterId, webtoonId, user?.id, userRole, fetchChapterDetails, location.key]);
 
   useEffect(() => { 
     localStorage.setItem('readingMode', readingMode); 
@@ -160,24 +162,21 @@ const ReaderPage = () => {
 
   const handleInteraction = () => { if (!showControls) setShowControls(true); resetControlsTimeout(); };
   const toggleComments = () => { setShowComments(!showComments); if (!showControls) setShowControls(true); };
+  const navigateToChapterById = (targetChapterId) => { if (targetChapterId) navigate(`/webtoon/${webtoonId}/chapter/${targetChapterId}`); };
   
-  const navigateToChapterBySlugAndNumber = (slug, chapterNumber) => {
-    if (slug && chapterNumber) navigate(`/webtoon/${slug}/chapter/${chapterNumber}`);
-  };
-
   const handlePageNavigation = (direction) => {
     const numPages = chapterData.currentChapter?.pages?.length || 0;
     if (direction === 'next') {
       if (currentPageIndex < numPages - 1) {
         setCurrentPageIndex(prev => prev + 1);
       } else if (chapterData.navChapters.next) {
-        navigateToChapterBySlugAndNumber(chapterData.navChapters.next.number);
+        navigateToChapterById(chapterData.navChapters.next.id);
       }
     } else if (direction === 'prev') {
       if (currentPageIndex > 0) {
         setCurrentPageIndex(prev => prev - 1);
       } else if (chapterData.navChapters.previous) {
-        navigateToChapterBySlugAndNumber(chapterData.navChapters.previous.number);
+        navigateToChapterById(chapterData.navChapters.previous.id);
       }
     }
   };
@@ -259,7 +258,7 @@ const ReaderPage = () => {
                         <Coffee className="mr-2 h-5 w-5" /> Soutenir sur Ko-fi
                     </Button>
                     <Button 
-                        onClick={() => navigate(`/webtoon/${webtoon.slug}`)} 
+                        onClick={() => navigate(`/webtoon/${webtoonId}`)} 
                         variant="outline"
                         size="lg"
                         className="w-full border-neutral-600 hover:bg-neutral-700/50 text-neutral-300 hover:text-white"
@@ -294,13 +293,13 @@ const ReaderPage = () => {
         webtoonId={webtoonId}
         currentChapterId={chapterId}
         allChapters={allChaptersInWebtoon}
-        onChapterChange={navigateToChapterBySlugAndNumber}
+        onChapterChange={navigateToChapterById}
         onToggleComments={toggleComments}
         showComments={showComments}
         isVisible={showControls}
         mainNavHeight={NAV_BAR_HEIGHT} 
-        onPrevChapter={() => navChapters.previous && navigateToChapterBySlugAndNumber(navChapters.previous.number)}
-        onNextChapter={() => navChapters.next && navigateToChapterBySlugAndNumber(navChapters.next.number)}
+        onPrevChapter={() => navChapters.previous && navigateToChapterById(navChapters.previous.id)}
+        onNextChapter={() => navChapters.next && navigateToChapterById(navChapters.next.id)}
         hasPrevChapter={!!navChapters.previous}
         hasNextChapter={!!navChapters.next}
       />
@@ -351,17 +350,14 @@ const ReaderPage = () => {
       />
       
       <ReaderCommentsPanel
-        slug={slug}
-        chapterNumber={chapterNumber}
         isVisible={showComments}
         onClose={toggleComments}
         webtoonId={webtoonId}
         chapterId={chapterId}
+        chapterNumber={currentChapter.number}
       />
     </motion.div>
   );
-
-  
 };
 
 export default ReaderPage;

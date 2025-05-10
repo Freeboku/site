@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -83,12 +84,12 @@ const AdminChapterEdit = () => {
 
       if (!fetchedWebtoon || !fetchedChapterData) {
         toast({ title: "Erreur", description: "Webtoon ou chapitre non trouvé.", variant: "destructive" });
-        navigate(`/admin/webtoons/${slug}/upload`);
+        navigate(`/admin/webtoons/${webtoonId}/upload`);
         return;
       }
       if (fetchedChapterData.accessDenied) {
         toast({ title: "Accès refusé", description: "Vous n'avez pas les droits pour modifier ce chapitre.", variant: "destructive" });
-        navigate(`/admin/webtoons/${slug}/upload`);
+        navigate(`/admin/webtoons/${webtoonId}/upload`);
         return;
       }
 
@@ -102,7 +103,7 @@ const AdminChapterEdit = () => {
     } catch (error) {
       console.error("Failed to fetch chapter data:", error);
       toast({ title: "Erreur de chargement", description: error.message, variant: "destructive" });
-      navigate(`/admin/webtoons/${slug}/upload`);
+      navigate(`/admin/webtoons/${webtoonId}/upload`);
     } finally {
       setFetching(false);
     }
@@ -201,7 +202,7 @@ const AdminChapterEdit = () => {
     try {
       await updateChapter(chapterId, webtoonId, updatedChapterData);
       toast({ title: "Succès", description: "Chapitre mis à jour avec succès." });
-      navigate(`/admin/webtoons/${slug}/upload`);
+      navigate(`/admin/webtoons/${webtoonId}/upload`);
     } catch (error) {
       console.error("Failed to update chapter:", error);
       toast({ title: "Erreur de mise à jour", description: error.message, variant: "destructive" });

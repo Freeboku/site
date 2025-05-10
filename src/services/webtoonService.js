@@ -1,3 +1,4 @@
+
 import { supabase } from '@/lib/supabaseClient';
 import { getPublicUrl, uploadWebtoonImage, deleteWebtoonFolder, deleteFile } from './storageService'; 
 
@@ -35,19 +36,23 @@ export const getWebtoons = async (searchTerm = '', selectedTags = [], filterBann
 };
 
 export const getWebtoonById = async (id) => {
-  const { data: webtoonData } = await supabase
+   const { data: webtoonData, error: webtoonError } = await supabase
     .from('webtoons')
     .select(`*, chapters (id, number, created_at, views)`)
     .eq('id', id)
     .single();
-};
 
-export const getWebtoonBySlug = async (slug) => {
-  const { data: webtoonData } = await supabase
-    .from('webtoons')
-    .select('*')
-    .eq('slug', slug)
-    .single();
+  if (webtoonError) {
+    console.error('Error fetching webtoon by ID:', webtoonError.message);
+    if (webtoonError.code === 'PGRST116') return null; 
+    throw webtoonError;
+  }
+  if (!webtoonData) return null;
+  
+  return {
+    ...mapWebtoonData(webtoonData),
+    chapters: (webtoonData.chapters || []).sort((a, b) => a.number - b.number).map(ch => ({ ...ch, views: ch.views || 0 })),
+  };
 };
 
 export const addWebtoon = async (webtoonData) => {

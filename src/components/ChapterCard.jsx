@@ -1,10 +1,10 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import { Eye, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import CommentSection from "@/components/CommentSection";
 
 const ChapterCard = ({ chapter, onDelete, onView, isAdmin = false, showPublicViews = false }) => {
   const { toast } = useToast();
@@ -13,7 +13,7 @@ const ChapterCard = ({ chapter, onDelete, onView, isAdmin = false, showPublicVie
     e.stopPropagation();
     
     if (window.confirm(`Êtes-vous sûr de vouloir supprimer le chapitre ${chapter.number} ?`)) {
-      onDelete(chapter.number);
+      onDelete(chapter.id);
       toast({
         title: "Chapitre supprimé",
         description: `Le chapitre ${chapter.number} a été supprimé avec succès.`,
@@ -37,7 +37,7 @@ const ChapterCard = ({ chapter, onDelete, onView, isAdmin = false, showPublicVie
                src={chapter.thumbnailUrl || (chapter.pages[0].preview || chapter.pages[0])}
                alt={`Aperçu Chapitre ${chapter.number}`}
                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-              />
+              src="https://images.unsplash.com/photo-1521051426148-4946df2795d4" />
            ) : (
              <div className="w-full h-full bg-muted flex items-center justify-center">
                <Eye className="h-12 w-12 text-muted-foreground" />
@@ -83,7 +83,6 @@ const ChapterCard = ({ chapter, onDelete, onView, isAdmin = false, showPublicVie
                 <Eye className="h-3 w-3 mr-1" /> {(chapter.views || 0).toLocaleString()}
               </p>
            )}
-           <CommentSection slug={slug} chapterNumber={chapterNumber} />
         </div>
       </Card>
     </motion.div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
@@ -151,7 +152,7 @@ const AllNotificationsPage = () => {
                        </div>
                     )}
                     <div className="flex-grow">
-                      <Link to={`/webtoon/${notif.slug}/chapter/${notif.chapterNumber}`} className="hover:underline">
+                      <Link to={`/webtoon/${notif.webtoon_id}/chapter/${notif.chapter_id}`} className="hover:underline">
                         <p className={`text-md font-medium ${!notif.is_read ? 'text-primary' : ''}`}>{notif.message}</p>
                       </Link>
                       <p className="text-xs text-muted-foreground mt-1">

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -11,10 +12,7 @@ const ReaderFooter = ({
   prevChapterNumber,
   nextChapterNumber,
   isVisible,
-  showComments,
-  navChapters,
-  slug,
-  navigateToChapterBySlugAndNumber
+  showComments
 }) => {
   if (!isVisible || showComments) return null;
 
@@ -52,29 +50,6 @@ const ReaderFooter = ({
           className="text-white hover:bg-white/10 hover:text-white w-10 h-10 md:w-12 md:h-12"
         >
           {currentPageIndex === totalPages - 1 && nextChapterNumber ? <SkipForward className="h-5 w-5 md:h-6 md:w-6" /> : <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />}
-        </Button>
-      </div>
-      <div className="container mx-auto flex justify-between items-center h-10 md:h-12">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navChapters.previous && navigateToChapterBySlugAndNumber(slug, navChapters.previous.number)}
-          disabled={!navChapters.previous}
-          title={navChapters.previous ? `Chapitre Précédent (${navChapters.previous.number})` : "Chapitre Précédent"}
-          className="text-white hover:bg-white/10 hover:text-white w-10 h-10 md:w-12 md:h-12"
-        >
-          <SkipBack className="h-5 w-5 md:h-6 md:w-6" />
-        </Button>
-        
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onNextChapter={() => navChapters.next && navigateToChapterBySlugAndNumber(slug, navChapters.next.number)}
-          disabled={!navChapters.next}
-          title={navChapters.next ? `Chapitre Suivant (${navChapters.next.number})` : "Chapitre Suivant"}
-          className="text-white hover:bg-white/10 hover:text-white w-10 h-10 md:w-12 md:h-12"
-        >
-          <SkipForward className="h-5 w-5 md:h-6 md:w-6" />
         </Button>
       </div>
     </motion.footer>

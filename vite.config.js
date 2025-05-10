@@ -171,12 +171,18 @@ const addTransformIndexHtml = {
 console.warn = () => {};
 
 export default defineConfig({
-  base: "./", // important pour que Vercel charge correctement les fichiers
-  plugins: [react()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
+	plugins: [react(), addTransformIndexHtml],
+	server: {
+		cors: true,
+		headers: {
+			'Cross-Origin-Embedder-Policy': 'credentialless',
+		},
+		allowedHosts: true,
+	},
+	resolve: {
+		extensions: ['.jsx', '.js', '.tsx', '.ts', '.json', ],
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+		},
+	},
 });
-

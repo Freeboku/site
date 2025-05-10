@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -22,7 +23,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPublicViews }) => {
   const isRestricted = chapter.required_roles && chapter.required_roles.length > 0;
-
   return (
     <li>
       <Button 
@@ -38,9 +38,9 @@ const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPub
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="ml-2 flex items-center">
+                  <span className="inline-flex items-center ml-2 flex-shrink-0">
                     <Lock className="h-4 w-4 text-amber-500" />
-                  </div>
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Accès restreint aux rôles : {chapter.required_roles.join(', ')}</p>
@@ -49,9 +49,9 @@ const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPub
             </TooltipProvider>
           )}
           {showPublicViews && (
-            <span className="ml-auto text-xs text-muted-foreground flex-shrink-0 pl-2 items-center flex">
-              <Eye className="mr-1 h-3 w-3" /> {(chapter.views || 0).toLocaleString()}
-            </span>
+              <span className="ml-auto text-xs text-muted-foreground flex-shrink-0 pl-2 items-center flex">
+                <Eye className="mr-1 h-3 w-3" /> {(chapter.views || 0).toLocaleString()}
+              </span>
           )}
           <span className="ml-2 text-xs text-muted-foreground flex-shrink-0 pl-2 border-l border-muted-foreground/20">
               {chapter.created_at ? new Date(chapter.created_at).toLocaleDateString('fr-FR') : ''}
@@ -238,9 +238,9 @@ const WebtoonDetailPage = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
                  {sortedChapters.length > 0 && firstChapterToRead ? (
                     <Button asChild className="w-full sm:w-auto">
-                       <Link to={`/webtoon/${webtoon.slug}/chapter/${firstChapterToRead.number}`}>
-  Lire Chapitre {firstChapterToRead.number}
-</Link>
+                       <Link to={`/webtoon/${webtoon.id}/chapter/${firstChapterToRead.id}`}>
+                        <BookOpen className="mr-2 h-4 w-4" /> Lire Ch. {firstChapterToRead.number}
+                      </Link>
                     </Button>
                  ) : (
                     <Button disabled className="w-full sm:w-auto">

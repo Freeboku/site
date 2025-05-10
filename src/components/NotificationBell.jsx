@@ -55,7 +55,7 @@ const NotificationBell = () => {
     try {
       await markNotificationAsRead(notification.id);
       fetchNotifications(); 
-      navigate(`/webtoon/${notification.webtoon_slug}/chapter/${notification.chapter_number}`);
+      navigate(`/webtoon/${notification.webtoon_id}/chapter/${notification.chapter_id}`);
       setIsOpen(false);
     } catch (error) {
       toast({ title: "Erreur", description: "Impossible de marquer la notification comme lue.", variant: "destructive" });

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -9,8 +10,7 @@ const ReaderCommentsPanel = ({
   onClose,
   webtoonId,
   chapterId,
-  chapterNumber,
-  slug
+  chapterNumber
 }) => {
   if (!isVisible) return null;
 
@@ -31,7 +31,7 @@ const ReaderCommentsPanel = ({
           </Button>
         </div>
         <div className="flex-grow overflow-y-auto p-3 md:p-4">
-          <CommentSection slug={slug} chapterNumber={chapterNumber} />
+          <CommentSection webtoonId={webtoonId} chapterId={chapterId} />
         </div>
       </motion.aside>
     </AnimatePresence>
