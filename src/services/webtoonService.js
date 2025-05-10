@@ -18,7 +18,7 @@ export const getWebtoons = async (searchTerm = '', selectedTags = [], filterBann
     .from('webtoons')
     .select(`
       id, title, description, cover_image_url, banner_image_url, 
-      is_banner, tags, views, show_public_views, chapters ( id )
+      is_banner, tags, views, show_public_views, chapters ( id ), slug
     `)
     .order('created_at', { ascending: false });
 
