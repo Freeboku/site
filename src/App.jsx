@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-r
 import { Toaster } from '@/components/ui/toaster';
 import Layout from '@/components/Layout';
 import HomePage from '@/pages/HomePage';
-import WebtoonDetailPage from '@/pages/WebtoonDetailPage';
 import ReaderPage from '@/pages/ReaderPage'; 
 import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
@@ -21,6 +20,63 @@ import AdminPopupManager from '@/pages/admin/AdminPopupManager';
 import NotFoundPage from '@/pages/NotFoundPage';
 import ProtectedRoute from '@/components/ProtectedRoute'; 
 import AllNotificationsPage from '@/pages/AllNotificationsPage';
+import { supabase } from '@/lib/supabaseClient';
+
+const incrementWebtoonView = async (webtoonId) => {
+  if (!webtoonId) {
+    console.error("Webtoon ID is undefined");
+    return;
+  }
+
+  try {
+    const { error } = await supabase.rpc('increment_webtoon_view', { webtoon_id: webtoonId });
+    if (error) {
+      console.error('Error incrementing webtoon view:', error.message);
+    }
+  } catch (err) {
+    console.error('Failed to call increment_webtoon_view:', err);
+  }
+};
+
+const fetchWebtoonDetails = async (slug) => {
+  if (!slug) {
+    console.error("Webtoon slug is undefined");
+    return;
+  }
+
+  try {
+    const { data: webtoonData, error } = await supabase
+      .from('webtoons')
+      .select('*, chapters(id, number, created_at, views)')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      console.error('Error fetching webtoon details:', error.message);
+    }
+
+    return webtoonData;
+  } catch (err) {
+    console.error('Failed to fetch webtoon details:', err);
+  }
+};
+
+const WebtoonDetailPage = () => {
+  const { slug } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const webtoon = await fetchWebtoonDetails(slug);
+      if (webtoon) {
+        await incrementWebtoonView(webtoon.id);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+
+  return <div>Webtoon Details</div>;
+};
 
 function App() {
   const [webtoon, setWebtoon] = useState(null);
@@ -66,29 +122,6 @@ function App() {
       setLoading(false);
     }
   }, []);
-
-  const fetchWebtoonDetails = async (slug) => {
-    if (!slug) {
-      console.error("Webtoon slug is undefined");
-      return;
-    }
-  
-    try {
-      const { data: webtoonData, error } = await supabase
-        .from('webtoons')
-        .select('*, chapters(id, number, created_at, views)')
-        .eq('slug', slug)
-        .single();
-  
-      if (error) {
-        console.error('Error fetching webtoon details:', error.message);
-      }
-  
-      return webtoonData;
-    } catch (err) {
-      console.error('Failed to fetch webtoon details:', err);
-    }
-  };
 
   const navigateToChapterBySlugAndNumber = (slug, chapterNumber) => {
     navigate(`/webtoon/${slug}/chapter/${chapterNumber}`);
