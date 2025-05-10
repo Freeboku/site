@@ -27,7 +27,6 @@ const HomePage = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const { user, userRole } = useAuth();
-  const { slug } = useParams();
 
 
   useEffect(() => {
@@ -164,7 +163,7 @@ const HomePage = () => {
                     </Link>
                     <CardFooter className="p-3 md:p-4 border-t border-border/30 mt-auto">
                       <Button variant="outline" size="sm" className="w-full hover:bg-primary/10 hover:text-primary transition-colors text-xs md:text-sm" asChild>
-                        <Link to={`/webtoon/${slug}`} draggable="false">Voir Plus</Link>
+                        <Link to={`/webtoon/${webtoons.slug}`} draggable="false">Voir Plus</Link>
                       </Button>
                     </CardFooter>
                   </Card>
