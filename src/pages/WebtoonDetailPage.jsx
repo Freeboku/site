@@ -83,25 +83,25 @@ const WebtoonDetailPage = () => {
     setLoading(true);
     setError(null);
     try {
- if (webtoon?.id) {
-   await incrementWebtoonView(webtoon.id);
- }
-      const { data: webtoon } = await supabase
+
+const { data: webtoonData } = await supabase
   .from('webtoons')
   .select('*')
   .eq('slug', slug)
   .single();
-      if (webtoon) {
-        setWebtoon(webtoon);
-        if (user && webtoon.id) {
-          const readData = await getReadChapters(user.id, webtoon.id);
-          setReadChapters(readData);
-        }
-        const similarData = await getSimilarWebtoons(webtoon.id);
-        setSimilarWebtoons(similarData);
-      } else {
-        setError("Webtoon non trouvé.");
-      }
+
+if (webtoonData) {
+  setWebtoon(webtoonData);
+  if (user && webtoonData.id) {
+    const readData = await getReadChapters(user.id, webtoonData.id);
+    setReadChapters(readData);
+  }
+  const similarData = await getSimilarWebtoons(webtoonData.id);
+  setSimilarWebtoons(similarData);
+} else {
+  setError("Webtoon non trouvé.");
+}
+
     } catch (err) {
       console.error("Failed to fetch webtoon details:", err);
       setError("Impossible de charger les détails du webtoon.");
