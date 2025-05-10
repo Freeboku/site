@@ -21,7 +21,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import ProtectedRoute from '@/components/ProtectedRoute'; 
 import AllNotificationsPage from '@/pages/AllNotificationsPage';
 import { supabase } from '@/lib/supabaseClient';
-import { useParams } from 'react-router-dom';
+import { useParams, useEffect, useState } from 'react-router-dom';
 
 const incrementWebtoonView = async (webtoonId) => {
   if (!webtoonId) {
@@ -79,8 +79,7 @@ const WebtoonDetailPage = () => {
   return <div>Webtoon Details</div>;
 };
 
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useParams, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
 const ReaderPage = () => {
@@ -130,7 +129,7 @@ const ReaderPage = () => {
   return <div>Lecture du chapitre {chapter.number}</div>;
 };
 
-export default ReaderPage;
+// Removed duplicate default export for ReaderPage
 
 const fetchChapterDetails = async (slug, chapterNumber) => {
   try {
