@@ -20,7 +20,10 @@ import NotFoundPage from './NotFoundPage';
 import CommentSection from '@/components/comments/CommentSection';
 import WebtoonCard from '@/components/WebtoonCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { getWebtoonById } from '@/services/webtoonService';
 
+
+const webtoonId =  getWebtoonById();
 const ChapterListItem = React.memo(({ chapter, webtoonId, isRead, isNew, showPublicViews }) => {
   const isRestricted = chapter.required_roles && chapter.required_roles.length > 0;
   return (
