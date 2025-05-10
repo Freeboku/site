@@ -321,7 +321,7 @@ useEffect(() => {
       <ReaderHeader
         webtoonTitle={webtoonInfo.title}
         chapterNumber={currentChapter.number}
-        webtoonId={webtoonId}
+        webtoonId={webtoonInfo.id}
         currentChapterId={chapterId}
         allChapters={allChaptersInWebtoon}
         onChapterChange={navigateToChapterById}
@@ -383,10 +383,11 @@ useEffect(() => {
       <ReaderCommentsPanel
         isVisible={showComments}
         onClose={toggleComments}
-        webtoonId={webtoonId}
+        webtoonId={webtoonInfo.id}
         chapterId={chapterId}
         chapterNumber={currentChapter.number}
       />
+
     </motion.div>
   );
 };
