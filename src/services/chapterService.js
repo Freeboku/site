@@ -63,7 +63,7 @@ export const getChapterWithPages = async (chapterId, currentUserId, currentUserR
     return { 
       id: chapterData.id, 
       webtoonId: chapterData.webtoon_id, 
-      webtoonSlug: chapterData.webtoons?.slug,
+      webtoonSlug: chapterData.webtoons?.id,
       number: chapterData.number, 
       accessDenied: true, 
       required_roles: chapterData.required_roles || [], 
