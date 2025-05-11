@@ -99,7 +99,7 @@ const BannerCarousel = () => {
           }}
           className="absolute inset-0 w-full h-full"
         >
-           <Link to={`/webtoon/${currentWebtoon.id}`} className="block w-full h-full">
+           <Link to={`/webtoon/${currentWebtoon.slug}`} className="block w-full h-full">
               <img  
                  className="absolute inset-0 w-full h-full object-cover brightness-75" 
                  alt={`Bannière pour ${currentWebtoon.title}`}
