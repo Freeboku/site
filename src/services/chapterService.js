@@ -375,7 +375,7 @@ export const deleteChapter = async (chapterId) => {
 export const getLatestChapters = async (limit = 4, currentUserId, currentUserRole) => {
   const { data, error } = await supabase
     .from('chapters')
-    .select(`id, number, created_at, thumbnail_url, views, required_roles, webtoon:webtoons (id, title, show_public_views)`)
+    .select(`id, number, created_at, thumbnail_url, views, required_roles, webtoon:webtoons (id, title, show_public_views, slug)`)
     .order('created_at', { ascending: false })
     .limit(limit);
 
@@ -395,7 +395,7 @@ export const getLatestChapters = async (limit = 4, currentUserId, currentUserRol
       createdAt: chapter.created_at,
       thumbnailUrl: chapter.thumbnail_url ? getPublicUrl(WEBTOON_IMAGES_BUCKET, chapter.thumbnail_url) : null,
       webtoonId: chapter.webtoon?.id,
-      webtoonSlug: chapter.webtoon?.slug,
+      webtoonSlug: chapter.webtoons?.slug,
       webtoonTitle: chapter.webtoon?.title,
       webtoonShowPublicViews: chapter.webtoon?.show_public_views || false,
       views: chapter.views || 0,
