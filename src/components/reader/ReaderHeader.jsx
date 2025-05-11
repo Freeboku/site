@@ -74,7 +74,7 @@ const ReaderHeader = ({
             <Link to="/" title="Accueil"> <Home className="h-4 w-4 md:h-5 md:w-5" /> </Link>
           </Button>
            <Button variant="ghost" size="icon" asChild className="w-8 h-8 md:w-10 md:h-10 text-red-400 hover:bg-red-500/20 hover:text-red-300">
-            <Link to={`/webtoon/${webtoonId}`} title="Quitter le lecteur"> <X className="h-4 w-4 md:h-5 md:w-5" /> </Link>
+            <Link to={`/webtoon/${webtoonSlug}`} title="Quitter le lecteur"> <X className="h-4 w-4 md:h-5 md:w-5" /> </Link>
           </Button>
         </div>
       </div>
