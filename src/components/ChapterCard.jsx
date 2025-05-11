@@ -37,7 +37,7 @@ const ChapterCard = ({ chapter, onDelete, onView, isAdmin = false, showPublicVie
                src={chapter.thumbnailUrl || (chapter.pages[0].preview || chapter.pages[0])}
                alt={`Aperçu Chapitre ${chapter.number}`}
                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-              src="https://images.unsplash.com/photo-1521051426148-4946df2795d4" />
+               />
            ) : (
              <div className="w-full h-full bg-muted flex items-center justify-center">
                <Eye className="h-12 w-12 text-muted-foreground" />
