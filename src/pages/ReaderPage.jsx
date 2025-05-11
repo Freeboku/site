@@ -322,6 +322,7 @@ useEffect(() => {
         webtoonTitle={webtoonInfo.title}
         chapterNumber={currentChapter.number}
         webtoonId={webtoonInfo.id}
+        webtoonSlug={slug}
         currentChapterId={chapterId}
         allChapters={allChaptersInWebtoon}
         onChapterChange={navigateToChapterById}
