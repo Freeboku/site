@@ -6,10 +6,11 @@ import { Home, BookOpen, Shuffle, Search, User, LogIn, LogOut, MessageCircle, Co
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
-import { getRandomWebtoonId } from '@/services/webtoonService';
+import { getRandomWebtoonSlug } from '@/services/webtoonService';
 import { useToast } from '@/components/ui/use-toast';
 import PopupDisplay from '@/components/PopupDisplay';
 import NotificationBell from '@/components/NotificationBell';
+import { getRandomWebtoonSlug } from '../services/webtoonService';
 
 const NAV_ITEMS_MAIN = [
   { name: 'Accueil', path: '/', icon: Home },
@@ -76,7 +77,7 @@ const Layout = () => {
   
   const handleRandomWebtoon = async () => {
     try {
-      const webtoonId = await getRandomWebtoonId();
+      const webtoonId = await getRandomWebtoonSlug();
       if (webtoonId) {
         navigate(`/webtoon/${webtoonId}`);
       } else {
