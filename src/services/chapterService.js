@@ -44,7 +44,7 @@ export const getChapterWithPages = async (chapterId, currentUserId, currentUserR
     .from('chapters')
     .select(`
       id, number, webtoon_id, thumbnail_url, views, created_at, required_roles,
-      webtoons (id, title, slug, show_public_views),
+      webtoons (title, id, show_public_views, slug),
       pages (id, page_number, image_url)
     `)
     .eq('id', chapterId)
