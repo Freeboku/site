@@ -179,7 +179,7 @@ const AllWebtoonsPage = () => {
         >
           {filteredWebtoons.map((webtoon) => (
             <motion.div key={webtoon.id} variants={itemVariants}>
-              <Link to={`/webtoon/${webtoon.id}`}>
+              <Link to={`/webtoon/${webtoon.slug}`}>
                 <Card className="overflow-hidden h-full group manga-card bg-card/70 backdrop-blur-sm border-border/50 hover:shadow-md transition-shadow">
                   <div className="aspect-[3/4] overflow-hidden bg-muted">
                     <img
