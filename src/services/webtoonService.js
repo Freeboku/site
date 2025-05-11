@@ -227,11 +227,11 @@ export const getReadChapters = async (userId, webtoonId) => {
 };
 
 export const getRandomWebtoonId = async () => {
-    const { count, error: countError } = await supabase.from('webtoons').select('id', { count: 'exact', head: true });
+    const { count, error: countError } = await supabase.from('webtoons').select('slug', { count: 'exact', head: true });
     if (countError) { console.error('Error fetching webtoon count:', countError.message); throw countError; }
     if (count === 0 || !count) return null;
     const randomOffset = Math.floor(Math.random() * count);
-    const { data: randomWebtoon, error: randomError } = await supabase.from('webtoons').select('id').limit(1).range(randomOffset, randomOffset); 
+    const { data: randomWebtoon, error: randomError } = await supabase.from('webtoons').select('slug').limit(1).range(randomOffset, randomOffset); 
     if (randomError) { console.error('Error fetching random webtoon ID:', randomError.message); throw randomError; }
     return randomWebtoon && randomWebtoon.length > 0 ? randomWebtoon[0].id : null;
 };
