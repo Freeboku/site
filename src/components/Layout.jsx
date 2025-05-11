@@ -10,7 +10,6 @@ import { getRandomWebtoonSlug } from '@/services/webtoonService';
 import { useToast } from '@/components/ui/use-toast';
 import PopupDisplay from '@/components/PopupDisplay';
 import NotificationBell from '@/components/NotificationBell';
-import { getRandomWebtoonSlug } from '../services/webtoonService';
 
 const NAV_ITEMS_MAIN = [
   { name: 'Accueil', path: '/', icon: Home },
