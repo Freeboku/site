@@ -395,7 +395,7 @@ export const getLatestChapters = async (limit = 4, currentUserId, currentUserRol
       createdAt: chapter.created_at,
       thumbnailUrl: chapter.thumbnail_url ? getPublicUrl(WEBTOON_IMAGES_BUCKET, chapter.thumbnail_url) : null,
       webtoonId: chapter.webtoon?.id,
-      webtoonSlug: chapter.webtoons?.slug,
+      webtoonSlug: chapter.webtoon?.slug,
       webtoonTitle: chapter.webtoon?.title,
       webtoonShowPublicViews: chapter.webtoon?.show_public_views || false,
       views: chapter.views || 0,
