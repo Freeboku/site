@@ -43,7 +43,7 @@ export const getChapterWithPages = async (chapterId, currentUserId, currentUserR
     .from('chapters')
     .select(`
       id, number, webtoon_id, thumbnail_url, views, created_at, required_roles,
-      webtoons (title, id, show_public_views),
+      webtoons (title, id, show_public_views, slug),
       pages (id, page_number, image_url)
     `)
     .eq('id', chapterId)
@@ -63,6 +63,7 @@ export const getChapterWithPages = async (chapterId, currentUserId, currentUserR
     return { 
       id: chapterData.id, 
       webtoonId: chapterData.webtoon_id, 
+      webtoonSlug: chapterData.webtoons?.slug || '',
       number: chapterData.number, 
       accessDenied: true, 
       required_roles: chapterData.required_roles || [], 
