@@ -27,6 +27,7 @@ const mapChapterData = (chapterData) => {
     id: chapterData.id,
     number: chapterData.number,
     webtoonId: chapterData.webtoon_id,
+    webtoonSlug: chapterData.webtoons?.slug || '',
     webtoonTitle: chapterData.webtoons?.title || '',
     webtoonShowPublicViews: chapterData.webtoons?.show_public_views || false,
     thumbnailUrl: thumbnailUrl,
@@ -43,7 +44,7 @@ export const getChapterWithPages = async (chapterId, currentUserId, currentUserR
     .from('chapters')
     .select(`
       id, number, webtoon_id, thumbnail_url, views, created_at, required_roles,
-      webtoons (title, id, show_public_views),
+      webtoons (id, title, slug, show_public_views),
       pages (id, page_number, image_url)
     `)
     .eq('id', chapterId)
