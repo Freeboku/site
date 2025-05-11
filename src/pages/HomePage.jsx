@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -181,7 +182,7 @@ const HomePage = () => {
            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
              {latestChapters.map((chapter) => (
                <motion.div key={chapter.id} variants={itemVariants}>
-                 <Link to={`/webtoon/${chapter.webtoonSlug}/chapter/${chapter.id}`}>
+                 <Link to={`/webtoon/${chapter.webtoonId}/chapter/${chapter.id}`}>
                     <Card className="overflow-hidden group bg-card/70 backdrop-blur-sm border-border/30 hover:shadow-lg transition-all duration-300 rounded-lg h-full flex flex-col">
                       <div className="aspect-video overflow-hidden bg-muted relative">
                          <img  
