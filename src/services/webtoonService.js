@@ -265,8 +265,8 @@ export const getRandomWebtoonSlug = async () => {
 };
 
 
-export const incrementWebtoonView = async (webtoonId) => {
-  const { error } = await supabase.rpc('increment_webtoon_view', { webtoon_id_param: webtoonId });
+export const incrementWebtoonView = async (webtoonSlug) => {
+  const { error } = await supabase.rpc('increment_webtoon_view', { webtoon_id_param: webtoonSlug });
   if (error) console.error('Error incrementing webtoon view:', error.message);
 };
 
