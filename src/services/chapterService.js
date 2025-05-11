@@ -27,6 +27,7 @@ const mapChapterData = (chapterData) => {
     id: chapterData.id,
     number: chapterData.number,
     webtoonId: chapterData.webtoon_id,
+    webtoonSlug: chapterData.webtoons?.slug,
     webtoonTitle: chapterData.webtoons?.title || '',
     webtoonShowPublicViews: chapterData.webtoons?.show_public_views || false,
     thumbnailUrl: thumbnailUrl,
