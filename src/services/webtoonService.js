@@ -31,6 +31,7 @@ export const getWebtoons = async (searchTerm = '', selectedTags = [], filterBann
   
   const { data, error } = await query;
   if (error) { console.error('Error fetching webtoons:', error.message); throw error; }
+  console.log('Fetched webtoon data:', data);
   return (data || []).map(mapWebtoonData);
 };
 
