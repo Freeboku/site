@@ -2,10 +2,11 @@ import { supabase } from '@/lib/supabaseClient';
 import { getPublicUrl, uploadWebtoonImage, deleteWebtoonFolder, deleteFile } from './storageService'; 
 
 const WEBTOON_IMAGES_BUCKET = 'webtoon-images';
+const BASE_IMAGE_URL = "https://<ayomxspoosbrsldbbptc>.supabase.co/storage/v1/object/public/webtoon-images/";
 
 const mapWebtoonData = (wt) => ({
   ...wt,
-  coverImageUrl: getPublicUrl(WEBTOON_IMAGES_BUCKET, wt.cover_image_url),
+  coverImageUrl: getPublicUrl(BASE_IMAGE_URL, wt.cover_image_url),
   bannerImageUrl: getPublicUrl(WEBTOON_IMAGES_BUCKET, wt.banner_image_url),
   chapterCount: wt.chapters?.length || 0,
   tags: wt.tags || [],
