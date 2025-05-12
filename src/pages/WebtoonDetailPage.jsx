@@ -221,7 +221,7 @@ if (webtoonData) {
               loading="lazy"
               className="h-auto w-full object-cover md:h-full aspect-[3/4] md:aspect-auto"
               alt={`Couverture de ${webtoon.title}`}
-              src={webtoon.coverImageUrl || webtoon.bannerImageUrl || defaultCover} 
+              src={webtoon.coverImageUrl || webtoon.bannerImageUrl} 
               onError={(e) => { e.currentTarget.src = defaultCoverImage; e.currentTarget.onerror = null; }} />
           </div>
           <div className="p-4 md:p-6 lg:p-8 flex-grow">
