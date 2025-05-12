@@ -139,6 +139,15 @@ if (webtoonData) {
     }
   }, [user, webtoon, authLoading]);
 
+    useEffect(() => {
+    const fetchWebtoon = async () => {
+      const fetchedWebtoon = await getWebtoonBySlug(slug);
+      setWebtoon(fetchedWebtoon);
+    };
+
+    fetchWebtoon();
+  }, [slug]);
+
   const handleToggleFavorite = useCallback(async () => {
     if (!user) {
       toast({ title: "Connexion requise", description: "Vous devez être connecté pour ajouter aux favoris.", variant: "destructive" });
