@@ -213,20 +213,25 @@ if (webtoonData) {
           <ArrowLeft className="mr-2 h-4 w-4" /> Retour
         </Link>
       </Button>
-console.log(webtoon)
+
       <Card className="overflow-hidden bg-card/70 backdrop-blur-sm shadow-lg">
         <div className="md:flex">
           <div className="md:flex-shrink-0 w-full md:w-1/3 lg:w-1/4 xl:w-1/5">
-          {webtoon?.coverImageUrl && (
-            <div className="w-full aspect-[3/4] bg-muted overflow-hidden rounded-lg mb-4">
-              <img
-                src={webtoon.coverImageUrl}
-                alt={`Couverture de ${webtoon.title}`}
-                className="w-full h-full object-cover"
-                onError={(e) => { e.target.onerror = null; e.target.src = defaultCover; }}
-              />
-            </div>
-          )}
+          <picture>
+            <source srcSet={`/public/${webtoon.id}/cover.avif`} type="image/avif" />
+            <source srcSet={`/public/${webtoon.id}/cover.webp`} type="image/webp" />
+            <img
+              loading="lazy"
+              className="h-auto w-full object-cover md:h-full aspect-[3/4] md:aspect-auto"
+              alt={`Couverture de ${webtoon.title}`}
+              src={`/public/${webtoon.id}/cover.jpg`}
+              onError={(e) => {
+                e.currentTarget.src = defaultCoverImage;
+                e.currentTarget.onerror = null;
+              }}
+            />
+          </picture>
+
           </div>
           <div className="p-4 md:p-6 lg:p-8 flex-grow">
             <CardHeader className="p-0 mb-3 md:mb-4">
