@@ -204,8 +204,8 @@ const ProfilePage = () => {
          ) : favorites.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {favorites.map(webtoon => (
-                 webtoon?.id && ( 
-                    <WebtoonCard key={webtoon.id} webtoon={webtoon} isFavorite={true} />
+                 webtoon?.slug && ( 
+                    <WebtoonCard key={webtoon.slug} webtoon={webtoon} isFavorite={true} />
                  )
                ))}
             </div>

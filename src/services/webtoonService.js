@@ -195,7 +195,7 @@ export const getUserFavorites = async (userId) => {
    if (!userId) return [];
    const { data, error } = await supabase
      .from('user_favorites')
-     .select(`webtoon:webtoons!inner (id, title, cover_image_url, banner_image_url, is_banner, tags, views, show_public_views, chapters ( id ))`)
+     .select(`webtoon:webtoons!inner (id, title, cover_image_url, banner_image_url, is_banner, tags, views, slug, show_public_views, chapters ( id ))`)
      .eq('user_id', userId)
      .order('created_at', { ascending: false });
    if (error) { console.error("Error fetching user favorites:", error.message); throw error; }
