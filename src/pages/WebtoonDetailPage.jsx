@@ -217,21 +217,12 @@ if (webtoonData) {
       <Card className="overflow-hidden bg-card/70 backdrop-blur-sm shadow-lg">
         <div className="md:flex">
           <div className="md:flex-shrink-0 w-full md:w-1/3 lg:w-1/4 xl:w-1/5">
-          <picture>
-            <source srcSet={`/public/${webtoon.id}/cover.avif`} type="image/avif" />
-            <source srcSet={`/public/${webtoon.id}/cover.webp`} type="image/webp" />
-            <img
+            <img  
               loading="lazy"
               className="h-auto w-full object-cover md:h-full aspect-[3/4] md:aspect-auto"
               alt={`Couverture de ${webtoon.title}`}
-              src={`/public/${webtoon.id}/cover.jpg`}
-              onError={(e) => {
-                e.currentTarget.src = defaultCoverImage;
-                e.currentTarget.onerror = null;
-              }}
-            />
-          </picture>
-
+              src={webtoon?.cover_image_url}
+              onError={(e) => { e.currentTarget.src = defaultCoverImage; e.currentTarget.onerror = null; }} />
           </div>
           <div className="p-4 md:p-6 lg:p-8 flex-grow">
             <CardHeader className="p-0 mb-3 md:mb-4">
