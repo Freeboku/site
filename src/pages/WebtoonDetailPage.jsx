@@ -213,7 +213,7 @@ if (webtoonData) {
           <ArrowLeft className="mr-2 h-4 w-4" /> Retour
         </Link>
       </Button>
-
+console.log(webtoon)
       <Card className="overflow-hidden bg-card/70 backdrop-blur-sm shadow-lg">
         <div className="md:flex">
           <div className="md:flex-shrink-0 w-full md:w-1/3 lg:w-1/4 xl:w-1/5">
