@@ -199,7 +199,7 @@ const Layout = () => {
                   <X className="h-6 w-6" />
                 </Button>
               </div>
-              <form onSubmit={handleSearch} className="flex items-center space-x-2">
+              <form onSubmit={handleSearchClick} className="flex items-center space-x-2">
                 <Input
                   type="text"
                   value={searchTerm}
