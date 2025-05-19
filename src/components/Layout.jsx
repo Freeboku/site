@@ -64,8 +64,7 @@ const Layout = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearchClick = () => {
     if (searchTerm.trim()) {
       navigate(`/webtoons?search=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm('');
@@ -202,11 +201,10 @@ const Layout = () => {
               </div>
               <form onSubmit={handleSearch} className="flex items-center space-x-2">
                 <Input
-                  ref={searchInputRef}
-                  type="search"
-                  placeholder="Rechercher un webtoon..."
+                  type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Rechercher..."
                   className="flex-grow text-lg p-3 bg-muted border-border focus:bg-background"
                 />
                 <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Rechercher</Button>
