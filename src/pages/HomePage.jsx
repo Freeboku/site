@@ -31,7 +31,7 @@ const HomePage = () => {
 
 
   useEffect(() => {
-      if (webtoonsCache.current) {
+    if (webtoonsCache.current) {
     setAllWebtoons(webtoonsCache.current);
     setLoadingWebtoons(false);
     return;
