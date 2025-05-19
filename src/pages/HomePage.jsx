@@ -27,9 +27,15 @@ const HomePage = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const { user, userRole } = useAuth();
+  const webtoonsCache = useRef(null);
 
 
   useEffect(() => {
+      if (webtoonsCache.current) {
+    setAllWebtoons(webtoonsCache.current);
+    setLoadingWebtoons(false);
+    return;
+  }
     const fetchAllData = async () => {
       setLoadingWebtoons(true);
       setLoadingChapters(true);
@@ -64,6 +70,7 @@ const HomePage = () => {
         setLoadingWebtoons(false);
         setLoadingChapters(false);
       } 
+      webtoonsCache.current = webtoonsData;
     };
 
     fetchAllData();
