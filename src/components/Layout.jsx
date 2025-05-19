@@ -64,7 +64,8 @@ const Layout = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const handleSearchClick = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (searchTerm.trim()) {
       navigate(`/webtoons?search=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm('');
@@ -135,13 +136,13 @@ const Layout = () => {
                 <span>Aléatoire</span>
               </Button>
               {renderNavLinks(NAV_ITEMS_SOCIAL)}
-              <form onSubmit={handleSearchClick} className="flex items-center space-x-2">
+              <form onSubmit={handleSearch} className="relative ml-2">
                 <Input
-                  type="text"
+                  type="search"
+                  placeholder="Rechercher..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Rechercher..."
-                  className="flex-grow text-lg p-3 bg-muted border-border focus:bg-background"
+                  className="pl-10 pr-3 py-2 text-sm w-36 lg:w-48 bg-muted border-border focus:bg-background focus:border-primary transition-all h-9"
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </form>
@@ -199,12 +200,13 @@ const Layout = () => {
                   <X className="h-6 w-6" />
                 </Button>
               </div>
-              <form onSubmit={handleSearchClick} className="flex items-center space-x-2">
+              <form onSubmit={handleSearch} className="flex items-center space-x-2">
                 <Input
-                  type="text"
+                  ref={searchInputRef}
+                  type="search"
+                  placeholder="Rechercher un webtoon..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Rechercher..."
                   className="flex-grow text-lg p-3 bg-muted border-border focus:bg-background"
                 />
                 <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Rechercher</Button>
