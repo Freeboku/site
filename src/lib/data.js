@@ -5,11 +5,22 @@ const WEBTOON_IMAGES_BUCKET = 'webtoon-images';
 
 // --- Helper Functions ---
 
-const getPublicUrl = (filePath) => {
+const getSignedUrl = async (filePath, expiresInSeconds = 60) => {
   if (!filePath) return null;
-  const { data } = supabase.storage.from(WEBTOON_IMAGES_BUCKET).getPublicUrl(filePath);
-  return data?.publicUrl || null;
+
+  const { data, error } = await supabase
+    .storage
+    .from(WEBTOON_IMAGES_BUCKET)
+    .createSignedUrl(filePath, expiresInSeconds);
+
+  if (error) {
+    console.error("Erreur lors de la génération de l'URL signée :", error.message);
+    return null;
+  }
+
+  return data?.signedUrl || null;
 };
+
 
 const uploadFile = async (file, path) => {
   const { data, error } = await supabase.storage
@@ -216,7 +227,7 @@ export const getChapterWithPages = async (chapterId) => {
   // Resolve public URLs for pages
   const pagesWithUrls = (pagesData || []).map(page => ({
      ...page,
-     imageUrl: getPublicUrl(page.image_url) // Resolve public URL
+     imageUrl: getSignedUrl(page.image_url, 60), // Resolve public URL
   }));
 
   return {
