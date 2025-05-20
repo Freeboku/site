@@ -17,7 +17,7 @@ const mapChapterData = (chapterData) => {
       id: page.id,
       page_number: page.page_number,
       image_url: page.image_url,
-      publicUrl: base64Images[page.id] ? getPublicUrl(WEBTOON_IMAGES_BUCKET, page.image_url) : null,
+      publicUrl: base64Images[page.id] || page.publicUrl ? getPublicUrl(WEBTOON_IMAGES_BUCKET, page.image_url) : null,
       file: null 
     }));
   
