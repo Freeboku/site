@@ -227,7 +227,7 @@ export const getChapterWithPages = async (chapterId) => {
   // Resolve public URLs for pages
   const pagesWithUrls = (pagesData || []).map(page => ({
      ...page,
-     imageUrl: getSignedUrl(page.image_url, 60), // Resolve public URL
+     imageUrl: getSignedUrl(page.image_url, 5), // Resolve public URL
   }));
 
   return {
