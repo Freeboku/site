@@ -228,7 +228,7 @@ export const getChapterWithPages = async (chapterId) => {
 const pagesWithUrls = await Promise.all(
   (pagesData || []).map(async (page) => ({
     ...page,
-    imageUrl: await getSignedUrl(page.image_url, 60), // 60 secondes de validité (modifiable)
+    imageUrl: await getSignedUrl(page.image_url, 5), // 60 secondes de validité (modifiable)
   }))
 );
 
