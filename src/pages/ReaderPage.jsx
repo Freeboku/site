@@ -39,8 +39,6 @@ const ReaderPage = () => {
   const [readingMode, setReadingMode] = useState(localStorage.getItem('readingMode') || 'webtoon');
   const [zoomLevel, setZoomLevel] = useState(parseFloat(localStorage.getItem('zoomLevel')) || 100);
   const [showComments, setShowComments] = useState(false);
-  const [base64Images, setBase64Images] = useState({});
-
   
   const controlsTimeoutRef = useRef(null);
   const preloadedImagesRef = useRef(new Set());
@@ -58,23 +56,6 @@ const ReaderPage = () => {
 
   return data;
 };
-
-    const fetchImageAsDataURL = async (imageUrl) => {
-      try {
-        const response = await fetch(imageUrl);
-        const blob = await response.blob();
-
-        return await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result); // retourne le data URL
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        });
-      } catch (error) {
-        console.error("Erreur lors de la conversion de l'image en dataURL :", error);
-        return null;
-      }
-    };
 
 
   const fetchChapterDetails = useCallback(async (currentChapterId, currentWebtoonId, currentUserId, currentUserRoleName) => {
@@ -180,44 +161,29 @@ useEffect(() => {
   }, [zoomLevel]);
 
 
-useEffect(() => {
-  const convertAllPagesToBase64 = async () => {
-    if (
-      !loading &&
-      chapterData.currentChapter &&
-      !chapterData.currentChapter.accessDenied &&
-      chapterData.currentChapter.pages.length > 0
-    ) {
-      const base64Map = {};
-
-      for (const page of chapterData.currentChapter.pages) {
-        if (!page.publicUrl) continue;
-
-        try {
-          const response = await fetch(page.publicUrl);
-          const blob = await response.blob();
-
-          const base64 = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
-
-          base64Map[page.id] = base64;
-        } catch (err) {
-          console.error(`Erreur lors de la conversion de la page ${page.id} :`, err);
-        }
+  useEffect(() => {
+    if (!loading && chapterData.currentChapter && !chapterData.currentChapter.accessDenied && chapterData.currentChapter.pages.length > 0) {
+      const imagesToPreload = [];
+      const preloadCount = readingMode === 'horizontal' ? 2 : 3; 
+      for (let i = 1; i <= preloadCount; i++) {
+        if (currentPageIndex + i < chapterData.currentChapter.pages.length) imagesToPreload.push(chapterData.currentChapter.pages[currentPageIndex + i].publicUrl);
+        if (readingMode === 'horizontal' && currentPageIndex - i >= 0) imagesToPreload.push(chapterData.currentChapter.pages[currentPageIndex - i].publicUrl);
       }
-
-      setBase64Images(base64Map);
+      imagesToPreload.forEach(url => {
+        if (url && !preloadedImagesRef.current.has(url)) {
+          const img = new Image(); img.src = url;
+          preloadedImagesRef.current.add(url);
+        }
+      });
     }
-  };
+  }, [currentPageIndex, chapterData.currentChapter, loading, readingMode]);
 
-  convertAllPagesToBase64();
-}, [loading, chapterData.currentChapter]);
-
-
+  const resetControlsTimeout = useCallback(() => {
+    if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+    controlsTimeoutRef.current = setTimeout(() => {
+      if (!showComments) setShowControls(false);
+    }, 5000);
+  }, [showComments]);
 
   useEffect(() => {
     if (showControls) resetControlsTimeout();
