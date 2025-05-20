@@ -39,6 +39,8 @@ const ReaderPage = () => {
   const [readingMode, setReadingMode] = useState(localStorage.getItem('readingMode') || 'webtoon');
   const [zoomLevel, setZoomLevel] = useState(parseFloat(localStorage.getItem('zoomLevel')) || 100);
   const [showComments, setShowComments] = useState(false);
+  const [base64Images, setBase64Images] = useState({});
+
   
   const controlsTimeoutRef = useRef(null);
   const preloadedImagesRef = useRef(new Set());
@@ -186,7 +188,7 @@ useEffect(() => {
       !chapterData.currentChapter.accessDenied &&
       chapterData.currentChapter.pages.length > 0
     ) {
-      const base64Pages = [];
+      const base64Map = {};
 
       for (const page of chapterData.currentChapter.pages) {
         if (!page.publicUrl) continue;
@@ -202,21 +204,19 @@ useEffect(() => {
             reader.readAsDataURL(blob);
           });
 
-          base64Pages.push({
-            id: page.id,
-            base64,
-          });
+          base64Map[page.id] = base64;
         } catch (err) {
           console.error(`Erreur lors de la conversion de la page ${page.id} :`, err);
         }
       }
 
-      console.log("📦 Toutes les pages en base64 :", base64Pages);
+      setBase64Images(base64Map);
     }
   };
 
   convertAllPagesToBase64();
 }, [loading, chapterData.currentChapter]);
+
 
 
   useEffect(() => {
